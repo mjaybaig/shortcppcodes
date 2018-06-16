@@ -30,51 +30,7 @@ int main(){
 
     int loc = 1;
     string direction = " ";
-
     cout<<locations[loc]<<endl;
-
-
-    bool validEntry = false;
-    string canGo = "";
-    cout<<"Where would you like to go from here: ";
-    
-    for(map<string, int>::iterator it = exits[loc].begin(); it != exits[loc].end(); ++it){
-        cout<<it->first<<", ";
-    }
-
-    cout<<": ";
-    getline(cin, direction);
-    transform(direction.begin(), direction.end(), direction.begin(), [](unsigned char c) -> unsigned char{ return toupper(c); } );
-    
-    for(map<string, int>::iterator it = exits[loc].begin(); it != exits[loc].end(); ++it){
-        canGo += it->first + ", ";
-        if(it->first == direction)
-            validEntry = true;
-        // end if
-    }
-
-    do{
-        if(validEntry == false){
-            cout<<"You cannot go here. Please try again"<<endl;
-        }
-        else{
-            validEntry = false;
-            loc = exits[loc][direction];
-
-            cout<<locations[loc]<<endl;
-
-            for(map<string, int>::iterator it = exits[loc].begin(); it != exits[loc].end(); ++it){
-                canGo = "";
-                canGo += it->first + ", ";
-                if(it->first == direction)
-                    validEntry = true;
-                // end if
-            }
-        }
-        cout<<"Where would you like to go from here: "<<canGo<<": ";
-        getline(cin, direction);
-        transform(direction.begin(), direction.end(), direction.begin(), [](unsigned char c) -> unsigned char{ return toupper(c); } );
-    } while (loc != 0);
 
     return 0;
 }
