@@ -28,22 +28,29 @@ int main(){
         { 4, { { "N", 1 }, { "W", 2 }, { "Q", 0} } },
         { 5, { { "W", 2 }, { "S", 1 }, { "Q", 0} } }
     };
-
+    // current location of user
     int loc = 1;
+
+    // display current (initial) location to user
     cout<<locations[loc]<<endl;
     
+    // main game loop
     do{
+        // stores intended direction input by user
         string direction = " ";
-        string goptions = "";
+
+        // stores list of available options stored by program
         vector<string> exitKeys = {};
+
+        // flag true when direction entered by user matches any one from available exitKeys
         bool validEntry = false;
 
-        //Iterate through the current available exits and prepare the string of options, and populate the vector also
+        //Iterate through the current available exits, print them to user and populate the vector used for testing input validity also
         for(map<string, int>::iterator it = exits[loc].begin(); it != exits[loc].end(); it++){
-            goptions += it->first + ", ";
+            cout<<it->first<<", ";
             exitKeys.push_back(it->first);
         }
-        cout<<goptions<<": ";
+        cout<<": ";
 
         //receive user input for intended direction and uppercase it
         getline(cin, direction);
@@ -55,19 +62,19 @@ int main(){
             if(i == direction){
                 loc = exits[loc][direction];
                 validEntry = true;
-                // break;
+                break;
             }       
             //end if
         }
         // end for
 
+        // direction entered by user did not match any of the available exits. flag is still false, user should try again
         if(!validEntry)
             cout<<"Invalid entry: Try again"<<endl;
         else
             cout<<locations[loc]<<endl;
         //end if
-    } while(loc != 0);
-    
+    } while(loc != 0);   
 
     return 0;
 }
