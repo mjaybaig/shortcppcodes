@@ -2,12 +2,14 @@
 #include <string>
 #include <map>
 #include <algorithm>
+#include <vector>
+// #include <array>
 
 using namespace std;
 
 typedef map<int, string> t_intmap;
 typedef map<int, map<string, int>> t_strmap;
-
+// const size_t ARRBUFFSIZE = 50;
 int main(){
     
     t_intmap locations = {
@@ -30,7 +32,41 @@ int main(){
 
     int loc = 1;
     string direction = " ";
+    string goptions = "";
+    vector<string> exitKeys = {};
+    bool validEntry = false;
+    // array<string, ARRBUFFSIZE> exitKeys = {};
     cout<<locations[loc]<<endl;
+
+    // size_t one = sizeof(map<string, int>::iterator);
+
+    //Iterate through the current available exits and prepare the string of options, and populate the vector also
+    for(map<string, int>::iterator it = exits[loc].begin(); it != exits[loc].end(); it++){
+        goptions += it->first + ", ";
+        exitKeys.push_back(it->first);
+    }
+    cout<<goptions<<": ";
+
+    //receive user input for intended direction and uppercase it
+    getline(cin, direction);
+    transform(direction.begin(), direction.end(), direction.begin(), [](unsigned char c) -> unsigned char { return toupper(c); } );
+
+    //iterate through available exits in vector
+    for(auto i: exitKeys){
+        if(i == direction){
+            loc = exits[loc][direction];
+            validEntry = true;
+        }       
+        //end if
+    }
+    // end for
+
+    if(!validEntry)
+        cout<<"Invalid entry: Try again"<<endl;
+    else
+        cout<<locations[loc]<<endl;
+    //end if
+    
 
     return 0;
 }
