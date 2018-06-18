@@ -3,11 +3,15 @@
 #include <map>
 #include <algorithm>
 #include <vector>
+#include <array>
 
 using namespace std;
 
-typedef map<int, string> t_intmap;
-typedef map<int, map<string, int>> t_strmap;
+const size_t VOCABSIZE = 5;
+
+typedef map<int, string>                        t_intmap;
+typedef map<int, map<string, int>>              t_strmap;
+typedef map<array<string, VOCABSIZE>, string>   t_vecmap;
 
 int main(){
     
@@ -28,6 +32,16 @@ int main(){
         { 4, { { "N", 1 }, { "W", 2 }, { "Q", 0} } },
         { 5, { { "W", 2 }, { "S", 1 }, { "Q", 0} } }
     };
+
+    //vocab map with vocabulary words corresponding to a valid intended direction
+    t_vecmap vocab = {
+        { {"NORTH", "UP"}, "N" },
+        { {"EAST", "RIGHT"}, "E" },
+        { {"SOUTH", "DOWN"}, "S" },
+        { {"WEST", "LEFT"}, "W" },
+        { {"QUIT", "EXIT", "X"}, "Q" }
+    };
+
     // current location of user
     int loc = 1;
 
@@ -55,6 +69,13 @@ int main(){
         //receive user input for intended direction and uppercase it
         getline(cin, direction);
         transform(direction.begin(), direction.end(), direction.begin(), [](unsigned char c) -> unsigned char { return toupper(c); } );
+        
+        //determine if user entered anything from the vocab list
+        for(t_vecmap::iterator vic = vocab.begin(); vic != vocab.end(); vic++){
+            if(find(vic->first.begin(), vic->first.end(), direction) != vic->first.end()){
+                direction = vic->second;
+            }
+        }
 
         //iterate through available exits in vector to determine whether user entered
         // a valid input. If valid input, location is updated and flag is set
