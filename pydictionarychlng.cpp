@@ -70,11 +70,30 @@ int main(){
         getline(cin, direction);
         transform(direction.begin(), direction.end(), direction.begin(), [](unsigned char c) -> unsigned char { return toupper(c); } );
         
-        //determine if user entered anything from the vocab list
-        for(t_vecmap::iterator vic = vocab.begin(); vic != vocab.end(); vic++){
-            if(find(vic->first.begin(), vic->first.end(), direction) != vic->first.end()){
-                direction = vic->second;
+        // in case user entered more than one word, take each word into account. 
+        int beg = 0;
+        int ind = 0;
+        vector<string> tokenized;
+        string tempDirection = direction + " ";
+        if(tempDirection[0] == ' '){
+            tempDirection = tempDirection.substr(1, tempDirection.length()-1);
+        }
+        do{
+            ind = tempDirection.find(' ', beg == 0? beg: ++beg);
+            if(ind >= 0){
+                tokenized.push_back(tempDirection.substr(beg, ind-beg));
             }
+            beg = ind;
+
+        }while(ind != -1);
+        //determine if user entered anything from the vocab list
+        for(auto temp: tokenized){
+            for(t_vecmap::iterator vic = vocab.begin(); vic != vocab.end(); vic++){
+                if(find(vic->first.begin(), vic->first.end(), temp) != vic->first.end()){
+                    direction = vic->second;
+                }
+            }
+            //end for
         }
 
         //iterate through available exits in vector to determine whether user entered
