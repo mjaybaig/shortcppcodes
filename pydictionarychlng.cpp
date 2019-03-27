@@ -1,3 +1,9 @@
+/*
+*pydictionarychlng.cpp
+*redoing a python dictionary challenge in C++
+* a tiny simulation that gives you a situation and possible options from that situation. Kind of like a directed graph, except it is modeled using a dictionary
+*/
+
 #include <iostream>
 #include <string>
 #include <map>

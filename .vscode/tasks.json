@@ -1,0 +1,28 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceRoot}/build"
+    },
+    "type": "shell",
+    // "suppressTaskName": true,
+    "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+    },
+    "tasks": [
+        {
+            "label": "cmake",
+            "command": "cmake -G 'MinGW Makefiles' .."
+        },
+        {
+            "label": "make",
+            "command": "make",
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}
